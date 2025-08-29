@@ -9,7 +9,12 @@ import freechips.rocketchip.diplomacy.{AsynchronousCrossing}
 
 // DOC include start: GemminiRocketConfig
 class GemminiRocketConfig extends Config(
-  new gemmini.DefaultGemminiConfig ++                            // use Gemmini systolic array GEMM accelerator
+  // new gemmini.DefaultGemminiConfig(0, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
+  // new gemmini.DefaultGemminiConfig(1, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
+  // new gemmini.DefaultGemminiConfig(2, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
+  // new gemmini.DefaultGemminiConfig(3, 32, 32, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
+  new gemmini.MultiDefaultGemminiConfig(4, 16, 16) ++
+  new freechips.rocketchip.subsystem.WithNBanks(4) ++
   new freechips.rocketchip.subsystem.WithNBigCores(1) ++
   new chipyard.config.WithSystemBusWidth(128) ++
   new chipyard.config.AbstractConfig)

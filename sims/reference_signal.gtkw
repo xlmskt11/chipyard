@@ -1,0 +1,64 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Wed May 21 06:04:57 2025
+[*]
+[dumpfile] "/home/dwc06209/chipyard/sims/verilator/op_all2.vcd"
+[dumpfile_mtime] "Tue May 20 18:24:15 2025"
+[dumpfile_size] 2771272801
+[savefile] "/home/dwc06209/chipyard/sims/reference_signal.gtkw"
+[timestart] 235800
+[size] 1536 889
+[pos] -87 -87
+*-15.098523 319200 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.TestHarness.
+[treeopen] TOP.TestHarness.chiptop.
+[treeopen] TOP.TestHarness.chiptop.system.
+[treeopen] TOP.TestHarness.chiptop.system.prci_ctrl_domain.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini.mod.ex.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini.mod_1.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_1.mod_1.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_1.mod_1.cmd.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_2.mod_1.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_2.mod_1.cmd.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_3.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_3.mod_1.
+[treeopen] TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_3.mod_1.cmd.
+[treeopen] TOP.TestHarness.chiptop.system_debug_systemjtag_reset_catcher.
+[treeopen] TOP.TestHarness.chiptop.system_debug_systemjtag_reset_catcher.io_sync_reset_chain.
+[sst_width] 360
+[signals_width] 178
+[sst_expanded] 1
+[sst_vpaned_height] 508
+@200
+-gemmini_0
+@28
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini.mod_1.ldA.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini.mod_1.ldB.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini.mod_1.ex.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini.mod_1.stC.io_cmd_valid
+@200
+-gemmini_1
+@28
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_1.mod_1.ldA.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_1.mod_1.ldB.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_1.mod_1.ex.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_1.mod_1.stC.io_cmd_valid
+@200
+-gemmni_2
+@28
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_2.mod_1.ldA.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_2.mod_1.ldB.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_2.mod_1.ex.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_2.mod_1.stC.io_cmd_valid
+@200
+-gemmini_3
+@28
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_3.mod_1.ldA.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_3.mod_1.ldB.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_3.mod_1.ex.io_cmd_valid
+TOP.TestHarness.chiptop.system.tile_prci_domain.tile_reset_domain_tile.gemmini_3.mod_1.stC.io_cmd_valid
+[pattern_trace] 1
+[pattern_trace] 0
