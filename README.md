@@ -2,6 +2,30 @@
 
 # Chipyard Framework [![Test](https://github.com/ucb-bar/chipyard/actions/workflows/chipyard-run-tests.yml/badge.svg)](https://github.com/ucb-bar/chipyard/actions)
 
+## Setting
+```shell
+git clone --recursive https://github.com/xlmskt11/chipyard.git
+cd chipyard
+git checkout my-work
+git submodule update --init --recursive
+
+./build-setup.sh (firemarshal 오류 시 ./build-setup.sh -s 9)
+
+source env.sh
+
+cd generators/gemmini/
+make -C software/libgemmini install
+
+cd ../../sims/verilator/
+make -j48 debug CONFIG=GemminiRocketConfig
+
+cd ~/chipyard/generators/gemmini/software/gemmini-rocc-tests/
+./build.sh
+
+cd ~/chipyard/sims/verilator/
+make -j48 CONFIG=GemminiRocketConfig run-binary-debug BINARY=../../generators/gemmini/software/gemmini-rocc-tests/build/bareMetalC/template_all2_multi1-baremetal
+```
+
 ## Quick Links
 
 * **Stable Documentation**: https://chipyard.readthedocs.io/
