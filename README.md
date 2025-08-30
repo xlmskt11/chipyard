@@ -9,7 +9,9 @@ cd chipyard
 git checkout my-work
 git submodule update --init --recursive
 
-./build-setup.sh (firemarshal 오류 시 ./build-setup.sh -s 9)
+./build-setup.sh
+# firemarshal 오류 시
+./build-setup.sh -s 9
 
 source env.sh
 
