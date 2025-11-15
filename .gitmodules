@@ -48,7 +48,7 @@
 	url = https://github.com/ucb-bar/coremark-workload.git
 [submodule "generators/gemmini"]
 	path = generators/gemmini
-	url = https://github.com/ucb-bar/gemmini
+	url = https://github.com/xlmskt11/gemmini.git
 [submodule "software/firemarshal"]
 	path = software/firemarshal
 	url = https://github.com/firesim/FireMarshal.git
@@ -121,3 +121,5 @@
 [submodule "tools/cde"]
 	path = tools/cde
 	url = https://github.com/chipsalliance/cde.git
+[submodule "generators/gemmini/software/gemmini-rocc-tests"]
+	url = https://github.com/xlmskt11/gemmini-rocc-tests.git

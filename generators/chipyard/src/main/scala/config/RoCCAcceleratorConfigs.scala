@@ -12,9 +12,9 @@ class GemminiRocketConfig extends Config(
   // new gemmini.DefaultGemminiConfig(0, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
   // new gemmini.DefaultGemminiConfig(1, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
   // new gemmini.DefaultGemminiConfig(2, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
-  // new gemmini.DefaultGemminiConfig(3, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
+  // new gemmini.DefaultGemminiConfig(3, 32, 32, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
   // new freechips.rocketchip.subsystem.WithoutTLMonitors() ++
-  new gemmini.MultiDefaultGemminiConfig(16, 16, 64, 32) ++
+  new gemmini.MultiDefaultGemminiConfig(16, 16, 256, 64) ++
   new freechips.rocketchip.subsystem.WithNBanks(1) ++
   new freechips.rocketchip.subsystem.WithNBigCores(1) ++
   new chipyard.config.WithSystemBusWidth(128) ++
