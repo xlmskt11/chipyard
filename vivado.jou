@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2021.1 (64-bit)
+# SW Build 3247384 on Thu Jun 10 19:36:07 MDT 2021
+# IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
+# Start of session at: Thu Jan 15 09:56:27 2026
+# Process ID: 2698068
+# Current directory: /data/dwc06209/chipyard
+# Command line: vivado
+# Log file: /data/dwc06209/chipyard/vivado.log
+# Journal file: /data/dwc06209/chipyard/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /data/dwc06209/FIRESIM_BUILDBIT_DIR/platforms/xilinx_alveo_u280/cl_xilinx_alveo_u280-firesim-FireSim-FireSimNoShareGemminiRocketConfig-BaseXilinxAlveoConfig/vivado_proj/firesim.xpr
+update_compile_order -fileset sources_1

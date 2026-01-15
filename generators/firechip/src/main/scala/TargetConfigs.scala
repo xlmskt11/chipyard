@@ -229,6 +229,7 @@ class FireSimLargeBoomAndRocketConfig extends Config(
 //******************************************************************
 // Gemmini NN accel config, base off chipyard's GemminiRocketConfig
 //******************************************************************
+// this
 class FireSimGemminiRocketConfig extends Config(
   new WithDefaultFireSimBridges ++
   new WithDefaultMemModel ++
@@ -306,3 +307,4 @@ class FireSimLeanGemminiRocketMMIOOnlyConfig extends Config(
   new WithDefaultMemModel ++
   new WithFireSimConfigTweaks ++
   new chipyard.LeanGemminiRocketConfig)
+

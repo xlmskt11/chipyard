@@ -20,7 +20,8 @@ RUN apt-get update && \
     keyboard-configuration \
     console-setup \
     bc \
-    unzip
+    unzip \
+    vim
 
 WORKDIR /root
 
@@ -42,23 +43,23 @@ SHELL ["/bin/bash", "-cl"]
 RUN cd chipyard && \
         export MAKEFLAGS=-"j $(nproc)" && \
         conda activate base && \
-        ./setup.sh --env-name chipyard --skip-validate
+        ./build-setup.sh
 
 SHELL ["/opt/conda/bin/conda", "run", "-n", "chipyard", "/bin/bash", "-cl"]
 
 # Set up FireMarshal. Building and cleaning br-base.json builds the underlying
 # buildroot image (which takes a long time) but doesn't keep all the br-base
 # stuff around (since that's faster to rebuild).
-RUN cd chipyard && \
-        source env.sh && \
-        cd software/firemarshal && \
-        ./init-submodules.sh && \
-        pip3 install -r python-requirements.txt && \
-        ./marshal build br-base.json && \
-        ./marshal clean br-base.json
+# RUN cd chipyard && \
+#         source env.sh && \
+#         cd software/firemarshal && \
+#         ./init-submodules.sh && \
+#         pip3 install -r python-requirements.txt && \
+#         ./marshal build br-base.json && \
+#         ./marshal clean br-base.json
 
 # Run script to set environment variables on entry
-ENTRYPOINT ["chipyard/scripts/entrypoint.sh"]
+# ENTRYPOINT ["chipyard/scripts/entrypoint.sh"]
 
 # END IMAGE CUSTOMIZATIONS
 
