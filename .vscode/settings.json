@@ -3,5 +3,5 @@
         "**/target": true
     },
     "C_Cpp.dimInactiveRegions": true,
-    "cmake.sourceDirectory": "/home/dwc06209/chipyard/generators/constellation/espresso"
+    "cmake.sourceDirectory": "/data/dwc06209/chipyard/generators/constellation/espresso"
 }

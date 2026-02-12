@@ -14,9 +14,44 @@ class GemminiRocketConfig extends Config(
   // new gemmini.DefaultGemminiConfig(2, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
   // new gemmini.DefaultGemminiConfig(3, 32, 32, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
   // new freechips.rocketchip.subsystem.WithoutTLMonitors() ++
-  new gemmini.MultiDefaultGemminiConfig(16, 16, 256, 128) ++
-  new freechips.rocketchip.subsystem.WithNBanks(1) ++
+  new gemmini.MultiDefaultGemminiConfig(16, 16, 128, 64) ++
+  new freechips.rocketchip.subsystem.WithNBanks(4) ++
   new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+  // new freechips.rocketchip.subsystem.WithInclusiveCache(nWays=2, capacityKB=2048) ++
+  // new freechips.rocketchip.subsystem.WithNMemoryChannels(2) ++ 
+  new chipyard.config.WithSystemBusWidth(128) ++
+  new chipyard.config.AbstractConfig)
+// DOC include end: GemminiRocketConfig
+
+class GemminiRocketConfigFiresim extends Config(
+  // new gemmini.DefaultGemminiConfig(0, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
+  // new gemmini.DefaultGemminiConfig(1, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
+  // new gemmini.DefaultGemminiConfig(2, 16, 16, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
+  // new gemmini.DefaultGemminiConfig(3, 32, 32, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
+  // new freechips.rocketchip.subsystem.WithoutTLMonitors() ++
+  new gemmini.MultiDefaultGemminiConfig(8, 8, 64, 32, gemmini.GemminiConfigs.firesimConfig) ++
+  new freechips.rocketchip.subsystem.WithNBanks(4) ++
+  new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+  // new freechips.rocketchip.subsystem.WithInclusiveCache(nWays=2, capacityKB=2048) ++
+  // new freechips.rocketchip.subsystem.WithNMemoryChannels(2) ++ 
+  new chipyard.config.WithSystemBusWidth(128) ++
+  new chipyard.config.AbstractConfig)
+// DOC include end: GemminiRocketConfig
+
+class SingleGemminiW16b16 extends Config(
+  new gemmini.DefaultGemminiConfig(3, 16, 16, 64, 32) ++                            // use Gemmini systolic array GEMM accelerator
+  new freechips.rocketchip.subsystem.WithNBanks(4) ++
+  new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+  // new freechips.rocketchip.subsystem.WithInclusiveCache(nWays=2, capacityKB=2048) ++
+  // new freechips.rocketchip.subsystem.WithNMemoryChannels(2) ++ 
+  new chipyard.config.WithSystemBusWidth(128) ++
+  new chipyard.config.AbstractConfig)
+// DOC include end: GemminiRocketConfig
+
+class FourGemminiWFourRocket extends Config(
+  new gemmini.DefaultGemminiConfig(3, 8, 8, 16, 8) ++                            // use Gemmini systolic array GEMM accelerator
+  new freechips.rocketchip.subsystem.WithNBanks(4) ++
+  new freechips.rocketchip.subsystem.WithNBigCores(4) ++
   // new freechips.rocketchip.subsystem.WithInclusiveCache(nWays=2, capacityKB=2048) ++
   // new freechips.rocketchip.subsystem.WithNMemoryChannels(2) ++ 
   new chipyard.config.WithSystemBusWidth(128) ++
