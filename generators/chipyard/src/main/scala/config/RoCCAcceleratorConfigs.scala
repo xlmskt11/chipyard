@@ -30,7 +30,7 @@ class GemminiRocketConfigFiresim extends Config(
   // new gemmini.DefaultGemminiConfig(3, 32, 32, 256, 64) ++                            // use Gemmini systolic array GEMM accelerator
   // new freechips.rocketchip.subsystem.WithoutTLMonitors() ++
   new gemmini.MultiDefaultGemminiConfig(16, 16, 128, 64, gemmini.GemminiConfigs.firesimConfig) ++
-  new freechips.rocketchip.subsystem.WithNBanks(4) ++
+  new freechips.rocketchip.subsystem.WithNBanks(1) ++
   new freechips.rocketchip.subsystem.WithNBigCores(1) ++
   // new freechips.rocketchip.subsystem.WithInclusiveCache(nWays=2, capacityKB=2048) ++
   // new freechips.rocketchip.subsystem.WithNMemoryChannels(2) ++ 
