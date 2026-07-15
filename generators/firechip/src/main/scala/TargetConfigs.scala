@@ -123,6 +123,12 @@ class WithFireSimConfigTweaks extends Config(
   new WithFireSimDesignTweaks
 )
 
+class FireSim16Dim128Spad64Acc4Bank4accsub4spadsubFourGemminiRocketConfigFinal extends Config(
+  new WithDefaultFireSimBridges ++
+  new WithDefaultMemModel ++
+  new WithFireSimConfigTweaks ++
+  new chipyard.GemminiRocketConfigFiresim)
+
 // Tweak more representative of testchip configs
 class WithFireSimTestChipConfigTweaks extends Config(
   new chipyard.config.WithTestChipBusFreqs ++
