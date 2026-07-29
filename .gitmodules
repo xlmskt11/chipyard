@@ -1,6 +1,6 @@
 [submodule "rocket-chip"]
 	path = generators/rocket-chip
-	url = https://github.com/chipsalliance/rocket-chip.git
+	url = https://github.com/xlmskt11/rocket-chip.git
 [submodule "testchipip"]
 	path = generators/testchipip
 	url = https://github.com/ucb-bar/testchipip.git
@@ -123,3 +123,6 @@
 	url = https://github.com/chipsalliance/cde.git
 [submodule "generators/gemmini/software/gemmini-rocc-tests"]
 	url = https://github.com/xlmskt11/gemmini-rocc-tests.git
+[submodule "generators/vpu"]
+	path = generators/vpu
+	url = https://github.com/xlmskt11/vpu.git

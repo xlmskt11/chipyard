@@ -189,3 +189,76 @@ class HwachaLargeBoomConfig extends Config(
   new boom.common.WithNLargeBooms(1) ++
   new chipyard.config.WithSystemBusWidth(128) ++
   new chipyard.config.AbstractConfig)
+
+
+// Common platform for the three comparison points below. WithInclusiveCache
+// must precede WithNBanks so capacityKB is divided across the configured banks;
+// all three systems therefore have one 2 MiB, 8-way, 4-bank L2 cache.
+class GemminiComparisonSystemConfig extends Config(
+  new freechips.rocketchip.subsystem.WithInclusiveCache(
+    nWays = 8,
+    capacityKB = 2048) ++
+  new freechips.rocketchip.subsystem.WithNBanks(4) ++
+  new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+  new chipyard.config.WithSystemBusWidth(128))
+
+// H1: four 16x16 Gemminis. Each Gemmini has one 128-bit DMA lane with 16
+// reader slots and 16 writer slots, for four lanes and 64 slots per direction.
+class GemminiComparison4x16RocketConfig extends Config(
+  new gemmini.MultiDefaultGemminiConfig(
+    mesh_rows = 16,
+    mesh_cols = 16,
+    sp_kB = 128,
+    acc_kB = 128) ++
+  new GemminiComparisonSystemConfig ++
+  new chipyard.config.AbstractConfig)
+
+// H2: the native one-DMA 32x32 Gemmini baseline (32 slots per direction).
+class GemminiComparison1x32RocketConfig extends Config(
+  new gemmini.DefaultGemminiConfig(
+    op_num = 3,
+    mesh_rows = 32,
+    mesh_cols = 32,
+    sp_kb = 128,
+    acc_kb = 128) ++
+  new GemminiComparisonSystemConfig ++
+  new chipyard.config.AbstractConfig)
+
+// H3: one 32x32 Gemmini with four independent 128-bit DMA/TL lanes. Each lane
+// has 16 reader and 16 writer slots, matching H1's four-lane/64-slot-per-
+// direction frontend while retaining one load/store/execute controller set.
+// class GemminiComparison1x32FourDMARocketConfig extends Config(
+//   new gemmini.DefaultGemminiConfig(
+//     op_num = 3,
+//     mesh_rows = 32,
+//     mesh_cols = 32,
+//     sp_kb = 128,
+//     acc_kb = 128,
+//     n_dma_engines = 4,
+//     max_in_flight_mem_reqs_per_engine = Some(16)) ++
+//   new GemminiComparisonSystemConfig ++
+//   new chipyard.config.AbstractConfig)
+
+// H1 plus one standalone VPU. The VPU owns its Vector SRAM and
+// dedicated TL/TLB DMA path; custom0/funct64 is routed to it while all other
+// custom0 commands continue to target Gemmini0.
+class GemminiComparison4x16VpuRocketConfig extends Config(
+  new vpu.WithVpu(vpu.VpuConfigs.default) ++
+  new gemmini.MultiDefaultGemminiConfig(
+    mesh_rows = 16,
+    mesh_cols = 16,
+    sp_kB = 128,
+    acc_kB = 128) ++
+  new GemminiComparisonSystemConfig ++
+  new chipyard.config.AbstractConfig)
+
+// The same system with BF16 Vector SRAM storage and FP32 VPU compute.
+class GemminiComparison4x16Bf16VpuRocketConfig extends Config(
+  new vpu.WithVpu(vpu.VpuConfigs.bf16Storage) ++
+  new gemmini.MultiDefaultGemminiConfig(
+    mesh_rows = 16,
+    mesh_cols = 16,
+    sp_kB = 128,
+    acc_kB = 128) ++
+  new GemminiComparisonSystemConfig ++
+  new chipyard.config.AbstractConfig)

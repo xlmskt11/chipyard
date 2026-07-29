@@ -110,8 +110,10 @@ lazy val rocketchip = freshProject("rocketchip", rocketChipDir)
     libraryDependencies ++= Seq(
       "org.scala-lang" % "scala-reflect" % scalaVersion.value,
       "org.json4s" %% "json4s-jackson" % "3.6.6",
-      "org.scalatest" %% "scalatest" % "3.2.0" % "test"
-    )
+      "org.scalatest" %% "scalatest" % "3.2.0" % "test",
+      "edu.berkeley.cs" %% "chiseltest" % "0.5.4" % Test
+    ),
+    Test / scalaSource := baseDirectory.value / "test" / "scala"
   )
   .settings( // Settings for scalafix
     semanticdbEnabled := true,
@@ -136,7 +138,7 @@ lazy val chipyard = (project in file("generators/chipyard"))
   .dependsOn(testchipip, rocketchip, boom, hwacha, sifive_blocks, sifive_cache, iocell,
     sha3, // On separate line to allow for cleaner tutorial-setup patches
     dsptools, `rocket-dsp-utils`,
-    gemmini, icenet, tracegen, cva6, nvdla, sodor, ibex, fft_generator,
+    gemmini, vpu, icenet, tracegen, cva6, nvdla, sodor, ibex, fft_generator,
     constellation, mempress)
   .settings(libraryDependencies ++= rocketLibDeps.value)
   .settings(
@@ -207,6 +209,20 @@ lazy val gemmini = (project in file("generators/gemmini"))
   .dependsOn(rocketchip)
   .settings(libraryDependencies ++= rocketLibDeps.value)
   .settings(chiselTestSettings)
+  .settings(commonSettings)
+
+lazy val vpu = (project in file("generators/vpu"))
+  .dependsOn(rocketchip, gemmini)
+  .settings(libraryDependencies ++= rocketLibDeps.value)
+  .settings(chiselTestSettings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "edu.berkeley.cs" %% "chiseltest" % "0.5.4" % Test,
+      "org.scalatest" %% "scalatest" % "3.2.0" % Test),
+    // Full-core Verilator elaborations are individually sizeable. Running
+    // several suites in one 1 GiB sbt JVM at once can exhaust the heap before
+    // the generated C++ processes start.
+    Test / parallelExecution := false)
   .settings(commonSettings)
 
 lazy val nvdla = (project in file("generators/nvdla"))

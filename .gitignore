@@ -5,6 +5,9 @@ target
 *.jar
 *.stamp
 *.vcd
+*.fir
+*.anno.json
+/test_run_dir/
 *.swp
 *.swo
 *.log
