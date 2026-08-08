@@ -265,8 +265,16 @@ class GemminiComparison4x16Bf16VpuRocketConfig extends Config(
 
 // Fused inference point: four 16x16 BF16-input/FP32-accumulate Gemminis share
 // SPAD/ACC, and one FP32 VPU is connected through matrix-row VSRAM ports,
-// grouped LOOP_WS completion control, and a common 129-entry dependency table.
+// grouped LOOP_WS completion control, and a separate VSRAM dependency table.
 class GemminiComparison4x16Bf16FusionVpuRocketConfig extends Config(
   new vpu.WithGemminiVpuFusion() ++
+  new GemminiComparisonSystemConfig ++
+  new chipyard.config.AbstractConfig)
+
+// One physical 32x32 BF16-input/FP32-accumulate Gemmini plus one FP32 VPU.
+// The Gemmini keeps local SPAD/ACC and local reservation dependencies; only
+// grouped LOOP_WS control and VSRAM hazards are shared with the VPU.
+class GemminiComparison1x32Bf16FusionVpuRocketConfig extends Config(
+  new vpu.WithSingle32x32GemminiVpuFusion ++
   new GemminiComparisonSystemConfig ++
   new chipyard.config.AbstractConfig)
