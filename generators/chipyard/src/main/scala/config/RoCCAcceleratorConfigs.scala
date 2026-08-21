@@ -202,6 +202,20 @@ class GemminiComparisonSystemConfig extends Config(
   new freechips.rocketchip.subsystem.WithNBigCores(1) ++
   new chipyard.config.WithSystemBusWidth(128))
 
+// BF16 fusion moves twice as many bytes as the original INT8 input/output
+// path.  Double each shared memory datapath at the same clock while preserving
+// four L2 banks and the 64-byte cache line:
+//   accelerator/L2 SystemBus: 128 -> 256 bits
+//   external DRAM:        1 x 64 -> 2 x 64-bit channels
+// Two 64-bit channels provide the requested 2x aggregate DRAM bandwidth and
+// remain compatible with Chipyard's 64-bit SimDRAM model.  Cache lines are
+// interleaved between the channels by address bit 6.
+// This fragment must precede GemminiComparisonSystemConfig so its SystemBus
+// override has higher Config precedence.
+class GemminiBf16FusionDoubleBandwidthConfig extends Config(
+  new chipyard.config.WithSystemBusWidth(256) ++
+  new freechips.rocketchip.subsystem.WithNMemoryChannels(2))
+
 // H1: four 16x16 Gemminis. Each Gemmini has one 128-bit DMA lane with 16
 // reader slots and 16 writer slots, for four lanes and 64 slots per direction.
 class GemminiComparison4x16RocketConfig extends Config(
@@ -264,17 +278,22 @@ class GemminiComparison4x16Bf16VpuRocketConfig extends Config(
   new chipyard.config.AbstractConfig)
 
 // Fused inference point: four 16x16 BF16-input/FP32-accumulate Gemminis share
-// SPAD/ACC, and one FP32 VPU is connected through matrix-row VSRAM ports,
-// grouped LOOP_WS completion control, and a separate VSRAM dependency table.
-class GemminiComparison4x16Bf16FusionVpuRocketConfig extends Config(
+// SPAD/ACC. Each Gemmini has one 16-entry DMA/TL/TLB lane (four lanes total),
+// and one FP32 VPU is connected through matrix-row VSRAM ports, grouped LOOP_WS
+// completion control, and a separate VSRAM dependency table.
+class GemminiComparison4x8Bf16FusionVpuRocketConfig extends Config(
   new vpu.WithGemminiVpuFusion() ++
+  new GemminiBf16FusionDoubleBandwidthConfig ++
   new GemminiComparisonSystemConfig ++
   new chipyard.config.AbstractConfig)
 
-// One physical 32x32 BF16-input/FP32-accumulate Gemmini plus one FP32 VPU.
-// The Gemmini keeps local SPAD/ACC and local reservation dependencies; only
-// grouped LOOP_WS control and VSRAM hazards are shared with the VPU.
-class GemminiComparison1x32Bf16FusionVpuRocketConfig extends Config(
-  new vpu.WithSingle32x32GemminiVpuFusion ++
+// One physical 32x32 BF16-input/FP32-accumulate Gemmini plus one FP32 VPU. Four
+// independent 16-entry DMA/TL/TLB lanes match the memory-side concurrency of
+// the four-Gemmini configuration. The Gemmini keeps local SPAD/ACC and local
+// reservation dependencies; only grouped LOOP_WS control and VSRAM hazards are
+// shared with the VPU.
+class GemminiComparison1x16Bf16FusionVpuRocketConfig extends Config(
+  new vpu.WithSingle16x16GemminiVpuFusion ++
+  new GemminiBf16FusionDoubleBandwidthConfig ++
   new GemminiComparisonSystemConfig ++
   new chipyard.config.AbstractConfig)
