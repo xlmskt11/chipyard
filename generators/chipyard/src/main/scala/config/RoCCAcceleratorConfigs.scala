@@ -277,21 +277,45 @@ class GemminiComparison4x16Bf16VpuRocketConfig extends Config(
   new GemminiComparisonSystemConfig ++
   new chipyard.config.AbstractConfig)
 
-// Fused inference point: four 16x16 BF16-input/FP32-accumulate Gemminis share
+// Fused inference point: four 8x8 BF16-input/FP32-accumulate Gemminis share
 // SPAD/ACC. Each Gemmini has one 16-entry DMA/TL/TLB lane (four lanes total),
-// and one FP32 VPU is connected through matrix-row VSRAM ports, grouped LOOP_WS
-// completion control, and a separate VSRAM dependency table.
+// and one 16-lane FP32 VPU uses the shared accumulator as its only vector
+// memory. SharedExtEntries owns the Gemmini/VPU accumulator dependencies.
 class GemminiComparison4x8Bf16FusionVpuRocketConfig extends Config(
-  new vpu.WithGemminiVpuFusion() ++
+  new vpu.WithGemminiVpuFusionAccBanks(4) ++
   new GemminiBf16FusionDoubleBandwidthConfig ++
   new GemminiComparisonSystemConfig ++
   new chipyard.config.AbstractConfig)
 
-// One physical 32x32 BF16-input/FP32-accumulate Gemmini plus one FP32 VPU. Four
-// independent 16-entry DMA/TL/TLB lanes match the memory-side concurrency of
-// the four-Gemmini configuration. The Gemmini keeps local SPAD/ACC and local
-// reservation dependencies; only grouped LOOP_WS control and VSRAM hazards are
-// shared with the VPU.
+// Fair-capacity private-memory comparison for the shared 4x8 point above.
+// Four Gemminis each own 64 KiB SPAD with four unsplit banks and 64 KiB ACC
+// with four banks split into two sub-banks. The VPU concatenates the four
+// private ACCs into one 256 KiB/16-logical-bank/32-physical-bank space, so its
+// two 8-element row fragments can be served together in one cycle.
+class GemminiComparison4x8Bf16PrivateFusionVpuRocketConfig extends Config(
+  new vpu.WithPrivate4x8GemminiVpuFusion ++
+  new GemminiBf16FusionDoubleBandwidthConfig ++
+  new GemminiComparisonSystemConfig ++
+  new chipyard.config.AbstractConfig)
+
+// Bank-only variants of the 4x8 fusion point. Total ACC capacity remains
+// 256 KiB; Gemmini and the VPU see the same logical-bank count.
+class GemminiComparison4x8Bf16FusionVpuAcc4BankRocketConfig extends Config(
+  new vpu.WithGemminiVpuFusionAccBanks(4) ++
+  new GemminiBf16FusionDoubleBandwidthConfig ++
+  new GemminiComparisonSystemConfig ++
+  new chipyard.config.AbstractConfig)
+
+class GemminiComparison4x8Bf16FusionVpuAcc8BankRocketConfig extends Config(
+  new vpu.WithGemminiVpuFusionAccBanks(8) ++
+  new GemminiBf16FusionDoubleBandwidthConfig ++
+  new GemminiComparisonSystemConfig ++
+  new chipyard.config.AbstractConfig)
+
+// One physical 16x16 BF16-input/FP32-accumulate Gemmini plus one 16-lane FP32
+// VPU. Four independent 16-entry DMA/TL/TLB lanes match the memory-side
+// concurrency of the four-Gemmini configuration. This configuration uses the
+// same shared-ACC memory and dependency path as the four-way cluster.
 class GemminiComparison1x16Bf16FusionVpuRocketConfig extends Config(
   new vpu.WithSingle16x16GemminiVpuFusion ++
   new GemminiBf16FusionDoubleBandwidthConfig ++

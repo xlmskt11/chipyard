@@ -242,6 +242,25 @@ class FireSimGemminiRocketConfig extends Config(
   new WithFireSimConfigTweaks ++
   new chipyard.GemminiRocketConfig)
 
+class FireSimGemminiComparison4x8Bf16FusionVpuRocketConfig extends Config(
+  new WithDefaultFireSimBridges ++
+  new WithDefaultMemModel ++
+  new WithFireSimConfigTweaks ++
+  new chipyard.GemminiComparison4x8Bf16FusionVpuRocketConfig)
+
+class FireSimGemminiComparison4x8Bf16PrivateFusionVpuRocketConfig
+    extends Config(
+  new WithDefaultFireSimBridges ++
+  new WithDefaultMemModel ++
+  new WithFireSimConfigTweaks ++
+  new chipyard.GemminiComparison4x8Bf16PrivateFusionVpuRocketConfig)
+
+class FireSimGemminiComparison1x16Bf16FusionVpuRocketConfig extends Config(
+  new WithDefaultFireSimBridges ++
+  new WithDefaultMemModel ++
+  new WithFireSimConfigTweaks ++
+  new chipyard.GemminiComparison1x16Bf16FusionVpuRocketConfig)
+
 class FireSimLeanGemminiRocketConfig extends Config(
   new WithDefaultFireSimBridges ++
   new WithDefaultMemModel ++
@@ -313,4 +332,3 @@ class FireSimLeanGemminiRocketMMIOOnlyConfig extends Config(
   new WithDefaultMemModel ++
   new WithFireSimConfigTweaks ++
   new chipyard.LeanGemminiRocketConfig)
-
